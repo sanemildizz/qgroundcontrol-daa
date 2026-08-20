@@ -2,19 +2,25 @@
 
 This fork of QGroundControl contains a minimal visualization extension developed for the UAV detect-and-avoid thesis project.
 
-The current custom Fly View overlay displays the horizontal footprint of the ownship-centered protected volume used by the DAA framework:
+The custom Fly View overlay displays two horizontal protected-volume footprints associated with the ownship UAV:
 
-- horizontal radius: **152.4 m (500 ft)**
+- **Solid blue circle:** current horizontal footprint of the project-defined protected volume, centred on the active vehicle.
+- **Dashed blue circle:** 45 s constant-velocity projection of the same protected-volume footprint, calculated from the current vehicle ground speed and heading.
+- horizontal protected-volume radius: **152.4 m (500 ft)**
 - vertical half-height used by the DAA logic: **30.48 m (100 ft)**
-- only the horizontal footprint is displayed on the 2D QGroundControl map
 
-The protected-volume circle is centered on the active vehicle and moves with it in real time. The standard QGroundControl interface, PX4 support, and normal vehicle functionality are otherwise retained.
+Only the horizontal footprint is represented on the 2D QGroundControl map.
+
+The projected dashed circle is a kinematic visualization of the vehicle state at the current instant. It does not represent the trajectory selected by the tactical resolver or an additional separation/protection layer.
+
+Both visualizations update continuously as the active vehicle moves.
 
 The DAA-specific implementation is intentionally isolated under:
 
 ```text
 custom/
 ├── CMakeLists.txt
+├── README.md
 ├── cmake/
 │   └── CustomOverrides.cmake
 └── src/
@@ -47,51 +53,4 @@ cd ~/PX4-Autopilot
 make px4_sitl gz_x500
 ```
 
-Once the vehicle connects to QGroundControl, the blue **152.4 m protected-volume circle** should remain centered on and move with the active vehicle.
-
-## Features
-
-- **Mission planning** — plan, edit, and fly autonomous waypoint, survey, and structure-scan missions.
-- **Live Fly View** — real-time flight display with map, instruments, and full vehicle telemetry.
-- **Vehicle setup** — guided wizards for sensor calibration, radio, flight modes, and power.
-- **Parameter tuning** — inspect and edit every vehicle parameter through the Fact System.
-- **Video streaming** — GStreamer-based UDP RTP / RTSP video with recording in the Flight Display.
-- **Multi-vehicle** — connect to and monitor multiple vehicles simultaneously.
-- **MAVLink tooling** — built-in MAVLink Inspector, console, and log download/analysis.
-- **Cross-platform** — Windows, macOS, Linux, Android, and iOS from a single codebase.
-
-## Download
-
-Grab the latest stable build for your platform, or see all assets on the
-[releases page](https://github.com/mavlink/QGroundControl/releases/latest):
-
-<p align="center">
-  <a href="https://github.com/mavlink/QGroundControl/releases/latest/download/QGroundControl-installer.exe"><img src="https://img.shields.io/badge/Windows-0078D6?logo=windows&logoColor=white" alt="Windows"></a>
-  <a href="https://github.com/mavlink/QGroundControl/releases/latest/download/QGroundControl.dmg"><img src="https://img.shields.io/badge/macOS-000000?logo=apple&logoColor=white" alt="macOS"></a>
-  <a href="https://github.com/mavlink/QGroundControl/releases/latest/download/QGroundControl-x86_64.AppImage"><img src="https://img.shields.io/badge/Linux-FCC624?logo=linux&logoColor=black" alt="Linux (AppImage)"></a>
-  <a href="https://github.com/mavlink/QGroundControl/releases/latest/download/QGroundControl.apk"><img src="https://img.shields.io/badge/Android-3DDC84?logo=android&logoColor=white" alt="Android"></a>
-</p>
-
-## Links
-
-- [Official Website](http://qgroundcontrol.com)
-- [User Manual](https://docs.qgroundcontrol.com/en/)
-- [Developer Guide](https://dev.qgroundcontrol.com/en/) / [Build Instructions](https://dev.qgroundcontrol.com/en/getting_started/)
-- [Discussion & Support](https://docs.qgroundcontrol.com/en/Support/Support.html)
-- [Dronecode Discord](https://discord.com/channels/1022170275984457759/1022185820683255908)
-- [Security Policy](.github/SECURITY.md)
-- [Code of Conduct](.github/CODE_OF_CONDUCT.md)
-- [License](https://github.com/mavlink/qgroundcontrol/blob/master/.github/COPYING.md)
-
-## Contributing
-
-QGC is open source and welcomes contributions. See [AGENTS.md](AGENTS.md) for build/test/lint
-commands and coding conventions, and [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md) for
-architecture patterns and the contribution workflow.
-
-QGC's interface is translated by the community — help translate it into your language on
-[Crowdin](https://crowdin.com/project/qgroundcontrol).
-
-## Star History
-
-[![Star History Chart](https://star-history.dera.page/svg?repos=mavlink/qgroundcontrol&type=date&legend=top-left)](https://star-history.dera.page/#mavlink/qgroundcontrol&type=date&legend=top-left)
+Once the vehicle connects to QGroundControl, the solid blue **152.4 m protected-volume circle** should remain centred on and move with the active vehicle, while the dashed blue circle should indicate the corresponding **45 s constant-velocity projected footprint**.
