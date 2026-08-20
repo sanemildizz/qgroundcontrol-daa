@@ -5,7 +5,7 @@ This fork of QGroundControl contains a minimal visualization extension developed
 The custom Fly View overlay displays two horizontal protected-volume footprints associated with the ownship UAV:
 
 - **Solid blue circle:** current horizontal footprint of the project-defined protected volume, centred on the active vehicle.
-- **Dashed blue circle:** 45 s constant-velocity projection of the same protected-volume footprint, calculated from the current vehicle ground speed and heading.
+- **Dashed blue circle:** The dashed blue circle represents a 45 s constant-velocity projection based only on the active vehicle's current ground speed and heading. It is intended as a kinematic motion-context indicator and does not represent the trajectory or future position selected by the tactical resolver.
 - horizontal protected-volume radius: **152.4 m (500 ft)**
 - vertical half-height used by the DAA logic: **30.48 m (100 ft)**
 
